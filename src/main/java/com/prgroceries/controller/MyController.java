@@ -1,6 +1,5 @@
 package com.prgroceries.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prgroceries.entity.Item;
-import com.prgroceries.entity.ItemOrder;
-import com.prgroceries.service.ItemServiceImpl;
+import com.prgroceries.service.ItemService;
+import com.prgroceries.service.OrderService;
 
 import lombok.extern.apachecommons.CommonsLog;
 
@@ -24,7 +23,10 @@ import lombok.extern.apachecommons.CommonsLog;
 public class MyController {
 	
 	@Autowired
-	ItemServiceImpl itemService;
+	ItemService itemService;
+	
+	@Autowired
+	OrderService orderService;
 	
 	@GetMapping("item")
 	public List<Item> getItems() {
@@ -47,7 +49,8 @@ public class MyController {
 	}
 	
 	@PostMapping("order")
-	public String makeOrder(ItemOrder order) {
-		return "";
+	public String makeOrder(@RequestBody List<Item> orderedItems) {
+		orderService.makeOrder(orderedItems);
+		return "order placed";
 	}
 }

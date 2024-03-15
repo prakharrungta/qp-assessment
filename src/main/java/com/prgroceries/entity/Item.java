@@ -1,5 +1,7 @@
 package com.prgroceries.entity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Set;
 
 import jakarta.annotation.Nonnull;
@@ -29,10 +31,20 @@ public class Item {
 	private String name;
 	
 	@Column(nullable = false)
-	private Double price;
+	private BigDecimal price;
 	
 	private Integer quantity = 0;
 	
-	@OneToMany(mappedBy = "item")
-	private Set<ItemOrder> itemOrders;
+//	@OneToMany(mappedBy = "item")
+//	private Set<OrderedItem> itemOrders;
+	
+	public void setPrice(BigDecimal price) {
+		this.price = price.setScale(2, RoundingMode.DOWN);
+	}
+	
+//	public void setQuantity(Integer quantity) {
+//		if(quantity < 0) {
+//			throw new RuntimeException("Not enough inventory to place this order");
+//		}
+//	}
 }

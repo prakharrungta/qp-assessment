@@ -1,5 +1,7 @@
 package com.prgroceries.entity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -23,10 +25,14 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	
-	@OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
-	private Set<ItemOrder> itemOrders;
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private Set<OrderedItem> itemOrders;
 	
-	private Double totalPrice;
+	private BigDecimal amount = BigDecimal.ZERO;
 	
-	private Date dateCreated;
+	private Date creationTime;
+	
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount.setScale(2, RoundingMode.DOWN);
+	}
 }

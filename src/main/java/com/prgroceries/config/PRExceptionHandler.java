@@ -22,6 +22,12 @@ public class PRExceptionHandler {
 	     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 	 }
 	 
+	 @ExceptionHandler(InsufficientInventoryException.class)
+	 public ResponseEntity<String> handleInsufficientInventoryException(InsufficientInventoryException ex) {
+		 ex.printStackTrace();
+	     return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+	 }
+	 
 	 @ExceptionHandler(Exception.class)
 	 public ResponseEntity<String> handleAllException(Exception ex) {
 		 ex.printStackTrace();
