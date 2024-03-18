@@ -18,39 +18,31 @@ import com.prgroceries.service.OrderService;
 import lombok.extern.apachecommons.CommonsLog;
 
 @CommonsLog
-@RequestMapping
+@RequestMapping("item")
 @RestController
-public class MyController {
+public class ItemController {
 	
 	@Autowired
 	ItemService itemService;
 	
-	@Autowired
-	OrderService orderService;
-	
-	@GetMapping("item")
+	@GetMapping
 	public List<Item> getItems() {
 		return itemService.getItems();
 	}
 	
-	@PostMapping("item")
+	@PostMapping
 	public void addItemsInInventory(@RequestBody List<Item> items) {
 		itemService.addItems(items);
 	}
 	
-	@DeleteMapping("item")
+	@DeleteMapping
 	public void removeItemFromInventory(@RequestBody Item itemToBeDeleted) {
 		itemService.deleteItem(itemToBeDeleted);
 	}
 	
-	@PutMapping("item")
+	@PutMapping
 	public void updateItemInfo(@RequestBody Item itemToBeUpdated) {
 		itemService.updateItemInfo(itemToBeUpdated);
 	}
 	
-	@PostMapping("order")
-	public String makeOrder(@RequestBody List<Item> orderedItems) {
-		orderService.makeOrder(orderedItems);
-		return "order placed";
-	}
 }

@@ -38,25 +38,26 @@ public class OrderServiceImpl implements OrderService {
 		order.setCreationTime(new Date());
 		Set<OrderedItem> orderedItems = new HashSet<>(itemsOrdered.size());
 		itemsOrdered.forEach(
-				(item) -> {
-					int orderedQty = item.getQuantity();
-					Item itemInInventory = itemRepo.getReferenceById(item.getId());
+			(item) -> {
+				int orderedQty = item.getQuantity();
+				Item itemInInventory = itemRepo.getReferenceById(item.getId());
+			
+				if(orderedQty > itemInInventory.getQuantity())
+					throw new InsufficientInventoryException("Insufficient inventory for item: " + itemInInventory.getName() + ". Existing units = " + itemInInventory.getQuantity() + ". Order request rejected.");
+				
+				OrderedItem orderedItem = new OrderedItem();
+				orderedItem.setOrder(order);
+				orderedItem.setItem(item);
+				orderedItem.setOrderedQty(orderedQty);
+				orderedItem.setSellingPrice(itemInInventory.getPrice());
+				orderedItems.add(orderedItem);
 					
-					if(orderedQty > itemInInventory.getQuantity())
-						throw new InsufficientInventoryException("Insufficient inventory for item: " + itemInInventory.getName() + ". Existing units = " + itemInInventory.getQuantity() + ". Order request rejected.");
-					
-					OrderedItem orderedItem = new OrderedItem();
-					orderedItem.setOrder(order);
-					orderedItem.setItem(item);
-					orderedItem.setOrderedQty(orderedQty);
-					orderedItem.setSellingPrice(itemInInventory.getPrice());
-					orderedItems.add(orderedItem);
-					
-					itemInInventory.setQuantity(itemInInventory.getQuantity() - orderedQty);
-					itemRepo.save(itemInInventory);
-					
-					order.setAmount(order.getAmount().add(itemInInventory.getPrice().multiply(new BigDecimal(orderedQty))));
-				});
+				itemInInventory.setQuantity(itemInInventory.getQuantity() - orderedQty);
+				itemRepo.save(itemInInventory);
+				
+				order.setAmount(order.getAmount().add(itemInInventory.getPrice().multiply(new BigDecimal(orderedQty))));
+			}
+		);
 		order.setItemOrders(orderedItems);
 		orderRepo.save(order);
 		log.info("Order placed for value = " + order.getAmount());
