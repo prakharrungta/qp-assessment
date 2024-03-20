@@ -35,20 +35,17 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	@Transactional
-	public String deleteItem(Item itemToBeDeleted) {
-		if(itemToBeDeleted.getItemId() == null)
-			throw new BadInputException("Item id is missing in input!");
+	public String deleteItem(Integer itemId) {
 		
-		if(!itemRepo.existsById(itemToBeDeleted.getItemId()))
-			throw new ResourceNotFoundException("Item does not exist in inventory!");
-		
-		itemToBeDeleted = itemRepo.findById(itemToBeDeleted.getItemId()).get();
+		Item itemToBeDeleted = itemRepo.findById(itemId).orElseThrow(() -> new ResourceNotFoundException("item does not exist in inventory!"));
 		
 		//set item_id as null in the order_items table for this item.
 		itemToBeDeleted.getItemInOrders().forEach((itemInOrder) -> itemInOrder.setItem(null));
 		
-		itemRepo.deleteById(itemToBeDeleted.getItemId());
-		String outputMsg = "item has been removed from inventory";
+		String itemName = itemToBeDeleted.getName();
+		itemRepo.deleteById(itemId);
+		
+		String outputMsg = itemName + " has been removed from inventory";
 		log.info(outputMsg);
 		return outputMsg;
 	}

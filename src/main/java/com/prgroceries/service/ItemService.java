@@ -9,6 +9,6 @@ import com.prgroceries.entity.Item;
 public interface ItemService {
 	public List<Item> getItems();
 	public String addItems(List<Item> newItems);
-	public String deleteItem(Item itemToBeDeleted);
+	public String deleteItem(Integer itemId);
 	public Item updateItemInfo(Item updatedItem);
 }
