@@ -30,20 +30,12 @@ public class OrderController {
 		return outputMsg;
 	}
 	
+	/**
+	 * Just to validate if the order is created. Will be removed once MySQL DB is setup.
+	 * @return list of all orders
+	 */
 	@GetMapping
 	public List<Order> getOrders() {
 		return orderService.getOrders();
 	}
-	
-	@GetMapping("{orderId}")
-	public Order getOrder(@PathVariable UUID orderId) {
-		return orderService.getOrder(orderId);
-	}
-	
-	@DeleteMapping("{orderId}")
-	public String removeItemFromInventory(@PathVariable UUID orderId) {
-		return orderService.deleteOrder(orderId);
-	}
-	
-	
 }

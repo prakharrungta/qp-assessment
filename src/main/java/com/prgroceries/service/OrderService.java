@@ -8,7 +8,8 @@ import com.prgroceries.entity.Order;
 
 public interface OrderService {
 	public String makeOrder(List<Item> itemsOrdered);
-	public String deleteOrder(UUID orderId);
 	public List<Order> getOrders();
-	public Order getOrder(UUID orderId);
+	/**
+	public String deleteOrder(UUID orderId);
+	public Order getOrder(UUID orderId);**/
 }

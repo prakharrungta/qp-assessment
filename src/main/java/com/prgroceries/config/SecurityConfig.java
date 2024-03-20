@@ -1,10 +1,8 @@
 package com.prgroceries.config;
 
-import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -22,12 +20,12 @@ public class SecurityConfig {
 	
 	@Bean
  	public UserDetailsService userDetailsService() {
- 		UserDetails user = User.withUsername("user")
- 			.password(passwordEncoder().encode("user"))
+ 		UserDetails user = User.withUsername("user0")
+ 			.password(passwordEncoder().encode("pass"))
  			.roles("USER")
  			.build();
- 		UserDetails admin = User.withUsername("admin")
- 			.password(passwordEncoder().encode("admin"))
+ 		UserDetails admin = User.withUsername("admin0")
+ 			.password(passwordEncoder().encode("pass"))
  			.roles("ADMIN")
  			.build();
  		return new InMemoryUserDetailsManager(user, admin);
@@ -41,8 +39,8 @@ public class SecurityConfig {
 	@Bean
  	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
  		http.authorizeHttpRequests(authCustomizer -> {
- 			authCustomizer.requestMatchers(HttpMethod.GET,"/item").permitAll()
- 						.requestMatchers("/item").hasRole("ADMIN")
+ 			authCustomizer.requestMatchers("/inventory/available").hasRole("USER")
+ 						.requestMatchers("/inventory/**").hasRole("ADMIN")
  						.requestMatchers("/order").hasRole("USER")
  						.anyRequest().authenticated();
  			})
@@ -50,6 +48,5 @@ public class SecurityConfig {
  			.httpBasic(withDefaults());
  		return http.build();
  	}
-
 
 }
