@@ -20,12 +20,12 @@ A simple Grocery app.
 
 ## Security
 Two users are already setup: 
-1. username: user0
-   password: pass
+1. username: user0 <br>
+   password: pass <br>
    role: user
-2. username: admin0
-   password: pass
-   role: admin
+2. username: admin0 <br>
+   password: pass <br>
+   role: admin <br>
 For testing, you can create additional users by updating the userDetailsService bean created in SecurityConfig class in config package.
 
 ## API Endpoints
