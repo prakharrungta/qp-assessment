@@ -24,12 +24,12 @@ public class SecurityConfig {
 	
 	@Bean
  	public UserDetailsService userDetailsService() {
- 		UserDetails user = User.withUsername("user")
- 			.password(passwordEncoder().encode("user"))
+ 		UserDetails user = User.withUsername("user0")
+ 			.password(passwordEncoder().encode("pass"))
  			.roles("USER")
  			.build();
- 		UserDetails admin = User.withUsername("admin")
- 			.password(passwordEncoder().encode("admin"))
+ 		UserDetails admin = User.withUsername("admin0")
+ 			.password(passwordEncoder().encode("pass"))
  			.roles("ADMIN")
  			.build();
  		return new InMemoryUserDetailsManager(user, admin);
@@ -43,8 +43,8 @@ public class SecurityConfig {
 	@Bean
  	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
  		http.authorizeHttpRequests(authCustomizer -> {
- 			authCustomizer.requestMatchers(HttpMethod.GET,"/item").permitAll()
- 						.requestMatchers("/item").hasRole("ADMIN")
+ 			authCustomizer.requestMatchers("/inventory/available").hasRole("USER")
+ 						.requestMatchers("/inventory/**").hasRole("ADMIN")
  						.requestMatchers("/order").hasRole("USER")
  						.anyRequest().authenticated();
  			})

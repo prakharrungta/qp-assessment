@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.prgroceries.config.BadInputException;
+import com.prgroceries.config.InventoryInsufficientException;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,7 +44,17 @@ public class Item {
 	private Set<ItemInOrder> itemInOrders;
 	
 	public void setPrice(BigDecimal price) {
+		if(price.compareTo(BigDecimal.ZERO) == -1) {
+			throw new BadInputException("Price cannot be less than zero!");
+		}
 		this.price = price.setScale(2, RoundingMode.DOWN);
+	}
+	
+	public void setQuantity(Integer quantity) {
+		if(quantity < 0) {
+			throw new InventoryInsufficientException("Operation halted. Inventory count cannot be less than zero!");
+		}
+		this.quantity = quantity;
 	}
 	
 }

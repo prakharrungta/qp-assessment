@@ -20,7 +20,7 @@ import com.prgroceries.service.OrderService;
 import lombok.extern.apachecommons.CommonsLog;
 
 @CommonsLog
-@RequestMapping("item")
+@RequestMapping("inventory")
 @RestController
 public class ItemController {
 	
@@ -28,8 +28,13 @@ public class ItemController {
 	ItemService itemService;
 	
 	@GetMapping
-	public List<Item> getItems() {
-		return itemService.getItems();
+	public List<Item> getAllItems() {
+		return itemService.getAllItems();
+	}
+	
+	@GetMapping("available")
+	public List<Item> getAvailableItems() {
+		return itemService.getAvailableItems();
 	}
 	
 	@PostMapping
@@ -42,6 +47,11 @@ public class ItemController {
 		return itemService.deleteItem(itemId);
 	}
 	
+	/**
+	 * Updates details (e.g., name, price, inventory level) of existing grocery items.
+	 * @param itemToBeUpdated item with all the updated attributes 
+	 * @return Updated item
+	 */
 	@PutMapping
 	public Item updateItemInfo(@RequestBody Item itemToBeUpdated) {
 		return itemService.updateItemInfo(itemToBeUpdated);

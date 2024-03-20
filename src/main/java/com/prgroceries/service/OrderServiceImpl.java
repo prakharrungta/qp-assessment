@@ -10,7 +10,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.prgroceries.config.InsufficientInventoryException;
+import com.prgroceries.config.InventoryInsufficientException;
 import com.prgroceries.config.ResourceNotFoundException;
 import com.prgroceries.entity.Item;
 import com.prgroceries.entity.Order;
@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 				Item itemInInventory = itemRepo.getReferenceById(item.getItemId());
 			
 				if(orderedQty > itemInInventory.getQuantity())
-					throw new InsufficientInventoryException("Insufficient inventory for item: " + itemInInventory.getName() + ". Existing units = " + itemInInventory.getQuantity() + ". Order request rejected.");
+					throw new InventoryInsufficientException("Insufficient inventory for item: " + itemInInventory.getName() + ". Existing units = " + itemInInventory.getQuantity() + ". Order request rejected.");
 				
 				ItemInOrder orderedItem = new ItemInOrder();
 				orderedItem.setOrder(order);

@@ -27,9 +27,9 @@ public class PRExceptionHandler {
 				.body(new MyException(ex.getMessage(), ex.getClass().getName()));
 	}
 
-	@ExceptionHandler(InsufficientInventoryException.class)
+	@ExceptionHandler(InventoryInsufficientException.class)
 	public ResponseEntity<PRExceptionHandler.MyException> handleInsufficientInventoryException(
-			InsufficientInventoryException ex) {
+			InventoryInsufficientException ex) {
 		ex.printStackTrace();
 		return ResponseEntity.status(HttpStatus.CONFLICT)
 				.body(new MyException(ex.getMessage(), ex.getClass().getName()));
