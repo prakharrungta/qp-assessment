@@ -10,16 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prgroceries.entity.Item;
 import com.prgroceries.service.ItemService;
-import com.prgroceries.service.OrderService;
 
-import lombok.extern.apachecommons.CommonsLog;
 
-@CommonsLog
 @RequestMapping("item")
 @RestController
 public class ItemController {

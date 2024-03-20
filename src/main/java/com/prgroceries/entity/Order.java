@@ -26,7 +26,6 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID orderId;
 	
-//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ItemInOrder> itemOrders;
 	
