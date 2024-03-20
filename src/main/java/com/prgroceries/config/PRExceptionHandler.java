@@ -9,42 +9,48 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.extern.apachecommons.CommonsLog;
 
 @ControllerAdvice
 public class PRExceptionHandler {
-	 @ExceptionHandler(ResourceNotFoundException.class)
-	 public ResponseEntity<PRExceptionHandler.MyException> handleResourceNotFoundException(ResourceNotFoundException ex) {
-		 ex.printStackTrace();
-	     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MyException(ex.getMessage(), ex.getClass().getName()));
-	 }
-	 
-	 @ExceptionHandler(BadInputException.class)
-	 public ResponseEntity<PRExceptionHandler.MyException> handleBadInputException(BadInputException ex) {
-		 ex.printStackTrace();
-	     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MyException(ex.getMessage(), ex.getClass().getName()));
-	 }
-	 
-	 @ExceptionHandler(InsufficientInventoryException.class)
-	 public ResponseEntity<PRExceptionHandler.MyException> handleInsufficientInventoryException(InsufficientInventoryException ex) {
-		 ex.printStackTrace();
-	     return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyException(ex.getMessage(), ex.getClass().getName()));
-	 }
-	 
-	 @ExceptionHandler(Exception.class)
-	 public ResponseEntity<PRExceptionHandler.MyException> handleAllException(Exception ex) {
-		 ex.printStackTrace();
-	     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MyException(ex.getMessage(), ex.getClass().getName()));
-	 }
-	 
-	 @AllArgsConstructor
-	 @Getter
-	 private class MyException implements Serializable{
-		 /**
-		 * 
-		 */
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<PRExceptionHandler.MyException> handleResourceNotFoundException(
+			ResourceNotFoundException ex) {
+		ex.printStackTrace();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				.body(new MyException(ex.getMessage(), ex.getClass().getName()));
+	}
+
+	@ExceptionHandler(BadInputException.class)
+	public ResponseEntity<PRExceptionHandler.MyException> handleBadInputException(BadInputException ex) {
+		ex.printStackTrace();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(new MyException(ex.getMessage(), ex.getClass().getName()));
+	}
+
+	@ExceptionHandler(InsufficientInventoryException.class)
+	public ResponseEntity<PRExceptionHandler.MyException> handleInsufficientInventoryException(
+			InsufficientInventoryException ex) {
+		ex.printStackTrace();
+		return ResponseEntity.status(HttpStatus.CONFLICT)
+				.body(new MyException(ex.getMessage(), ex.getClass().getName()));
+	}
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<PRExceptionHandler.MyException> handleAllException(Exception ex) {
+		ex.printStackTrace();
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(new MyException(ex.getMessage(), ex.getClass().getName()));
+	}
+
+	@AllArgsConstructor
+	@Getter
+	private class MyException implements Serializable {
+		/**
+		* 
+		*/
 		private static final long serialVersionUID = -6463811542308424620L;
 		private String errorMessage;
-		 private String errorType;
-	 }
+		private String errorType;
+
+	}
 }

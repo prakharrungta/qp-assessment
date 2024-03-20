@@ -5,7 +5,6 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -25,12 +24,12 @@ public class SecurityConfig {
 	
 	@Bean
  	public UserDetailsService userDetailsService() {
- 		UserDetails user = User.withUsername("prakhar")
- 			.password(passwordEncoder().encode("password1"))
+ 		UserDetails user = User.withUsername("user")
+ 			.password(passwordEncoder().encode("user"))
  			.roles("USER")
  			.build();
- 		UserDetails admin = User.withUsername("shikhar")
- 			.password(passwordEncoder().encode("password2"))
+ 		UserDetails admin = User.withUsername("admin")
+ 			.password(passwordEncoder().encode("admin"))
  			.roles("ADMIN")
  			.build();
  		return new InMemoryUserDetailsManager(user, admin);
@@ -43,9 +42,9 @@ public class SecurityConfig {
 	
 	@Bean
  	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
- 		http.authorizeHttpRequests(myCustomizer -> {
- 			myCustomizer.requestMatchers("/item").hasRole("ADMIN")
- 						.requestMatchers(HttpMethod.GET,"/item").permitAll()
+ 		http.authorizeHttpRequests(authCustomizer -> {
+ 			authCustomizer.requestMatchers(HttpMethod.GET,"/item").permitAll()
+ 						.requestMatchers("/item").hasRole("ADMIN")
  						.requestMatchers("/order").hasRole("USER")
  						.anyRequest().authenticated();
  			})

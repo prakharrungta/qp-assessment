@@ -3,11 +3,15 @@ package com.prgroceries.entity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,10 +27,11 @@ import lombok.Setter;
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+	private UUID orderId;
 	
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-	private Set<OrderedItem> itemOrders;
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<ItemInOrder> itemOrders;
 	
 	private BigDecimal amount = BigDecimal.ZERO;
 	

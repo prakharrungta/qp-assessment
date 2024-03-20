@@ -31,18 +31,18 @@ public class ItemController {
 	}
 	
 	@PostMapping
-	public void addItemsInInventory(@RequestBody List<Item> items) {
-		itemService.addItems(items);
+	public String addItemsInInventory(@RequestBody List<Item> items) {
+		return itemService.addItems(items);
 	}
 	
 	@DeleteMapping
-	public void removeItemFromInventory(@RequestBody Item itemToBeDeleted) {
-		itemService.deleteItem(itemToBeDeleted);
+	public String removeItemFromInventory(@RequestBody Item itemToBeDeleted) {
+		return itemService.deleteItem(itemToBeDeleted);
 	}
 	
 	@PutMapping
-	public void updateItemInfo(@RequestBody Item itemToBeUpdated) {
-		itemService.updateItemInfo(itemToBeUpdated);
+	public Item updateItemInfo(@RequestBody Item itemToBeUpdated) {
+		return itemService.updateItemInfo(itemToBeUpdated);
 	}
 	
 }

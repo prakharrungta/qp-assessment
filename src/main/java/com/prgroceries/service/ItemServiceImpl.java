@@ -1,8 +1,6 @@
 package com.prgroceries.service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import com.prgroceries.config.ResourceNotFoundException;
 import com.prgroceries.entity.Item;
 import com.prgroceries.repository.ItemRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.apachecommons.CommonsLog;
 
 @CommonsLog
@@ -27,65 +26,49 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public void addItems(List<Item> newItems) {
+	public String addItems(List<Item> newItems) {
 		List<Item> savedItems = itemRepo.saveAll(newItems);
-		log.info(savedItems.size() + " new items have been added in inventory");
+		String outputMsg = savedItems.size() + " new items have been added in inventory";
+		log.info(outputMsg);
+		return outputMsg;
 	}
 
 	@Override
-	public void deleteItem(Item itemToBeDeleted) {
-		if(itemToBeDeleted.getId() == null)
+	@Transactional
+	public String deleteItem(Item itemToBeDeleted) {
+		if(itemToBeDeleted.getItemId() == null)
 			throw new BadInputException("Item id is missing in input!");
 		
-		if(!itemRepo.existsById(itemToBeDeleted.getId()))
-			throw new ResourceNotFoundException(itemToBeDeleted + " does not exist in inventory!");
+		if(!itemRepo.existsById(itemToBeDeleted.getItemId()))
+			throw new ResourceNotFoundException("Item does not exist in inventory!");
 		
-		itemRepo.deleteById(itemToBeDeleted.getId());
-		log.info(itemToBeDeleted + " has been removed from inventory");
+		itemToBeDeleted = itemRepo.findById(itemToBeDeleted.getItemId()).get();
 		
+		//set item_id as null in the order_items table for this item.
+		itemToBeDeleted.getItemInOrders().forEach((itemInOrder) -> itemInOrder.setItem(null));
 		
+		itemRepo.deleteById(itemToBeDeleted.getItemId());
+		String outputMsg = "item has been removed from inventory";
+		log.info(outputMsg);
+		return outputMsg;
 	}
 
 	@Override
-	public void updateItemInfo(Item updatedItem) {
-		if(updatedItem.getId() == null)
+	@Transactional
+	public Item updateItemInfo(Item updatedItem) {
+		if(updatedItem.getItemId() == null)
 			throw new BadInputException("Item id is missing in input!");
 		
-		Item itemInInv = itemRepo.findById(updatedItem.getId()).orElseThrow(() -> new ResourceNotFoundException(updatedItem + " does not exist in inventory!"));
-		if(!updatedItem.getName().isBlank())
+		Item itemInInv = itemRepo.findById(updatedItem.getItemId()).orElseThrow(() -> new ResourceNotFoundException(updatedItem + " does not exist in inventory!"));
+		if(updatedItem.getName()!=null && !updatedItem.getName().isBlank())
 			itemInInv.setName(updatedItem.getName());
-		if(updatedItem.getPrice() != null)
+		if(updatedItem.getPrice()!=null && updatedItem.getPrice() != null)
 			itemInInv.setPrice(updatedItem.getPrice());
-		if(updatedItem.getQuantity() != null)
+		if(updatedItem.getQuantity()!=null && updatedItem.getQuantity() != null)
 			itemInInv.setQuantity(updatedItem.getQuantity());
 		itemRepo.save(itemInInv);
-		log.info(itemInInv + " info has been updated");
-	}
-
-	@Override
-	public void updateItemInventory(int itemId, int changeInQty) {
-		Optional<Item> itemOp = itemRepo.findById(itemId);
-		if(itemOp.isPresent()) {
-			Item item = itemOp.get();
-			int updatedQty = item.getQuantity() + changeInQty;
-			if(updatedQty > 0) {
-				item.setQuantity(item.getQuantity() + changeInQty);
-				itemRepo.save(item);
-				log.info(item.getName() + ": updated qty = " + item.getQuantity());
-			} else {
-				log.error("Inventory level not enough for this operation! Existing qty is only = " + item.getQuantity());
-			}
-			
-		} else {
-			log.error("Item does not exist in inventory!");
-		}
 		
+		log.info(itemInInv.getName() + ": " + " info has been updated");
+		return itemInInv;
 	}
-
-	@Override
-	public void updateItemInventory(Item itemWithUpdatedQty) {
-		itemRepo.save(itemWithUpdatedQty);
-		log.info(itemWithUpdatedQty.getName() + " qty has been updated");
-	}
-
 }
