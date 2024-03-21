@@ -13,10 +13,10 @@ A simple Grocery app.
 - In-mem relational H2 Database
 
 ## Setup Instructions
-1. Clone the repository.
+1. Clone the repository from master branch.
 2. Before running the app, make sure you have Java 17 installed.
 3. Run the app from IDE, make sure Build path is set to JDK 17.
-4. Access the application through the postman collection in project directory.
+4. Access the application at http://localhost:8080 through the endpoints mentioned below. You can use the postman collection in project directory - it has all the required sample requests.
 
 ## Security
 Two users are already setup: 
