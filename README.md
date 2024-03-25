@@ -10,7 +10,7 @@ A simple Grocery app.
 - Spring Boot 3.2
 - Spring Security 6.1
 - Spring Data JPA
-- In-mem relational H2 Database
+- MySQL Database
 
 ## Setup Instructions
 1. Clone the repository from master branch.
@@ -26,18 +26,16 @@ Two users are already setup:
 2. username: admin0 <br>
    password: pass <br>
    role: admin <br>
-For testing, you can create additional users by updating the userDetailsService bean created in SecurityConfig class in config package.
 
 ## API Endpoints
 - Admin Endpoints:
+  - `GET /api/users`: Create new user.
   - `POST /api/inventory`: Add new grocery items.
   - `GET /api/inventory`: View all existing grocery items.
   - `DELETE /api/inventory/{itemId}`: Remove grocery items.
   - `PUT /api/inventory/`: Update details of existing grocery items and manage inventory levels by providing the updated value in request body.
+  - `GET /api/orders`: View all orders.
 
 - User Endpoints:
   - `GET /api/inventory/available`: View available grocery items.
-  - `POST /api/order`: Book multiple grocery items in a single order.
-  
-## Upcoming changes
-- Dockerization of app and usage of MySQL DB instead of H2.
+  - `POST /api/orders`: Book multiple grocery items in a single order.
