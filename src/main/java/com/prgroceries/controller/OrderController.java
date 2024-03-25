@@ -17,7 +17,7 @@ import com.prgroceries.entity.Order;
 import com.prgroceries.service.OrderService;
 
 
-@RequestMapping("order")
+@RequestMapping("orders")
 @RestController
 public class OrderController {
 	
@@ -38,4 +38,17 @@ public class OrderController {
 	public List<Order> getOrders() {
 		return orderService.getOrders();
 	}
+	
+	/**
+	@GetMapping("{orderId}")
+	public Order getOrder(@PathVariable UUID orderId) {
+		return orderService.getOrder(orderId);
+	}
+	
+	@DeleteMapping("{orderId}")
+	public String removeItemFromInventory(@PathVariable UUID orderId) {
+		return orderService.deleteOrder(orderId);
+	}
+	**/
+	
 }

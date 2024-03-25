@@ -28,7 +28,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n  { \"name\": \"Eggs\", \"price\": 8, \"quantity\": 900 },\r\n   { \"name\": \"Tomato\", \"price\": 60, \"quantity\": 400 }\r\n  \r\n]",
+					"raw": "[\r\n  { \"name\": \"Tuna\", \"price\": 28, \"quantity\": 900 },\r\n   { \"name\": \"Fish\", \"price\": 50, \"quantity\": 400 }\r\n  \r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -36,11 +36,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/inventory",
+					"raw": "localhost:8081/api/inventory",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"api",
 						"inventory"
@@ -70,11 +70,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/inventory",
+					"raw": "localhost:8081/api/inventory",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"api",
 						"inventory"
@@ -90,13 +90,13 @@
 					"type": "basic",
 					"basic": [
 						{
-							"key": "username",
-							"value": "user0",
+							"key": "password",
+							"value": "pass",
 							"type": "string"
 						},
 						{
-							"key": "password",
-							"value": "pass",
+							"key": "username",
+							"value": "user0",
 							"type": "string"
 						}
 					]
@@ -104,11 +104,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/inventory/available",
+					"raw": "localhost:8081/api/inventory/available",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"api",
 						"inventory",
@@ -148,11 +148,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/inventory",
+					"raw": "localhost:8081/api/inventory",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"api",
 						"inventory"
@@ -182,11 +182,11 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/inventory/1",
+					"raw": "localhost:8081/api/inventory/1",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"api",
 						"inventory",
@@ -218,7 +218,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n    {\"itemId\": 1, \"quantity\": 40 },\r\n    {\"itemId\": 5, \"quantity\": 11 }\r\n  \r\n]",
+					"raw": "[\r\n    {\"itemId\": 802, \"quantity\": 40 },\r\n    {\"itemId\": 804, \"quantity\": 11 }\r\n  \r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -226,14 +226,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/order",
+					"raw": "localhost:8081/api/orders",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"api",
-						"order"
+						"orders"
 					]
 				}
 			},
@@ -249,13 +249,13 @@
 					"type": "basic",
 					"basic": [
 						{
-							"key": "password",
-							"value": "pass",
+							"key": "username",
+							"value": "admin0",
 							"type": "string"
 						},
 						{
-							"key": "username",
-							"value": "user0",
+							"key": "password",
+							"value": "pass",
 							"type": "string"
 						}
 					]
@@ -272,14 +272,57 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/order",
+					"raw": "localhost:8081/api/orders",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"api",
-						"order"
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin0",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "pass",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\"username\": \"super0\", \"password\": \"passx\", \"roles\": \"ADMIN, USER\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"users"
 					]
 				}
 			},
