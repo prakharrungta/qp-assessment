@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.prakharrungta.apps</groupId>
 	<artifactId>PRGroceryApp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>PRGroceryApp</name>
 	
 	<description>Technical Assessment for QuestionPro. Application ID: 29439485</description>
@@ -31,17 +31,11 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 			<version>3.1.9</version>
 		</dependency>
-
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<!--<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.33</version>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
