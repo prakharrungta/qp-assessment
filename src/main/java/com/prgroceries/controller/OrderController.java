@@ -20,7 +20,7 @@ import com.prgroceries.service.OrderService;
 import lombok.extern.apachecommons.CommonsLog;
 
 @CommonsLog
-@RequestMapping("order")
+@RequestMapping("orders")
 @RestController
 public class OrderController {
 	
@@ -38,6 +38,7 @@ public class OrderController {
 		return orderService.getOrders();
 	}
 	
+	/**
 	@GetMapping("{orderId}")
 	public Order getOrder(@PathVariable UUID orderId) {
 		return orderService.getOrder(orderId);
@@ -47,6 +48,8 @@ public class OrderController {
 	public String removeItemFromInventory(@PathVariable UUID orderId) {
 		return orderService.deleteOrder(orderId);
 	}
+	**/
+	
 	
 	
 }
