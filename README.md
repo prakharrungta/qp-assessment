@@ -14,9 +14,9 @@ A simple Grocery app.
 
 ## Setup Instructions
 1. Clone the repository from master branch.
-2. Before running the app, make sure you have Java 17 installed.
-3. Run the app from IDE, make sure Build path is set to JDK 17.
-4. Access the application at http://localhost:8080 through the endpoints mentioned below. You can use the postman collection in project directory - it has all the required sample requests.
+2. Open terminal and run the command `docker pull prakhardev/prgrocery-app:0.0.2-SNAPSHOT` to pull docker image from docker hub.
+3. Navigate to project directory in the terminal and run the command `docker-compose up -d` to launch the app container.
+4. Access the application at http://localhost:8081 through the endpoints mentioned below. You can use the postman collection in project directory - it has all the required sample requests.
 
 ## Security
 Two users are already setup: 
