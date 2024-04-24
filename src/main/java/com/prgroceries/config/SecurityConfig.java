@@ -1,17 +1,18 @@
 package com.prgroceries.config;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import com.prgroceries.service.PRGroceryUserServiceImpl;
 
@@ -40,7 +41,16 @@ public class SecurityConfig {
 						  .requestMatchers("/users").hasRole("ADMIN")
 						  .anyRequest().authenticated();
 		})
-		.csrf(csrfCustomizer -> csrfCustomizer.disable()).httpBasic(withDefaults());
+		.csrf(csrfCustomizer -> csrfCustomizer.disable())
+		.httpBasic((basic) -> basic
+	            .addObjectPostProcessor(new ObjectPostProcessor<BasicAuthenticationFilter>() {
+	                @Override
+	                public <O extends BasicAuthenticationFilter> O postProcess(O filter) {
+	                    filter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
+	                    return filter;
+	                }
+	            })
+	        );
 		return http.build();
 	}
 
